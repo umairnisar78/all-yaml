@@ -1,0 +1,36 @@
+---
+- name: playbook
+  hosts: all
+  tasks: 
+  - name: installingg packeges
+    yum:
+      name: nfs-utils
+      state: latest
+  - name: start service
+    service:
+      name: nfs-server
+      state: started
+      enabled: yes
+  - name: makingg dir
+    file: 
+      path: /tmp/dir1
+      state: directory
+  - name: makingg file
+    file:
+      path: /tmp/dir1/file1
+      state: touch
+  - name: addingg line
+    lineinfile:
+      path: /tmp/dir1/file1
+      line: 'text in file'
+  - name: addingg users
+    user:
+      name: mike
+      state: present
+      password: $1$2FO1ZOuB$jDN.jpvP0hgzpCkMFHoy41      
+  - name: firewall
+    firewalld:
+      port: 2049-111/udp
+      permanent: yes
+      state: enabled
+      immediate: true    
